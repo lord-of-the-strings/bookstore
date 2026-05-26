@@ -1,0 +1,15 @@
+# Spring Boot
+backend/config/
+backend/application.properties
+backend/build/
+backend/.gradle/
+
+# Flutter
+frontend/android/app/google-services.json
+frontend/lib/firebase_options.dart
+frontend/build/
+frontend/.dart_tool/
+
+# Environment
+.env
+*.json
