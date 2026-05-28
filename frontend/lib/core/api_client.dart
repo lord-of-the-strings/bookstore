@@ -11,20 +11,20 @@ class ApiClient {
       headers: {'Content-Type': 'application/json'},
     ),
   );
-
   static void init() {
     dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) async {
-          if (options.path.contains('/auth/')) {
-            return handler.next(options);
-          }
-          final jwt = await AuthService.getJwt();
-          if (jwt != null) {
-            options.headers['Authorization'] = 'Bearer $jwt';
-          }
-          return handler.next(options);
-        },
+  if (options.path.contains('/auth/')) {
+    return handler.next(options);
+  }
+  final jwt = await AuthService.getJwt();
+  print('DEBUG: JWT = $jwt');  // ← add this
+  if (jwt != null) {
+    options.headers['Authorization'] = 'Bearer $jwt';
+  }
+  return handler.next(options);
+},
         onError: (error, handler) async {
           if (error.response?.statusCode == 401) {
             await AuthService.clearTokens();

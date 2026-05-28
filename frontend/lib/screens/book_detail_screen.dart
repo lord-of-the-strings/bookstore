@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/book_provider.dart';
-
+import '../providers/cart_provider.dart';
 class BookDetailScreen extends ConsumerWidget {
   final int bookId;
   const BookDetailScreen({super.key, required this.bookId});
@@ -163,7 +163,20 @@ class BookDetailScreen extends ConsumerWidget {
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: FilledButton.icon(
-              onPressed: book.stock > 0 ? () {} : null,
+              onPressed: book.stock > 0
+    ? () async {
+        await ref.read(cartProvider.notifier).addToCart(book.id);
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('${book.title} added to cart!'),
+              backgroundColor: Theme.of(context).colorScheme.primary,
+              behavior: SnackBarBehavior.floating,
+            ),
+          );
+        }
+      }
+    : null,
               icon: const Icon(Icons.shopping_cart),
               label: Text(
                 book.stock > 0 ? 'Add to Cart' : 'Out of Stock',

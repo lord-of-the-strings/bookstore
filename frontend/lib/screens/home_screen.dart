@@ -5,6 +5,8 @@ import '../models/category.dart';
 import '../providers/book_provider.dart';
 import 'book_detail_screen.dart';
 import 'dart:async';
+import '../providers/cart_provider.dart';
+import 'cart_screen.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
@@ -16,22 +18,58 @@ class HomeScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'The Book Nook',
-          style: TextStyle(
-            fontStyle: FontStyle.italic,
-            fontSize: 22,
-            fontWeight: FontWeight.bold,
-            letterSpacing: 0.5,
-          ),
-        ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.search),
-            onPressed: () {},
-          ),
-        ],
-      ),
+  title: const Text(
+    'The Book Nook',
+    style: TextStyle(
+      fontStyle: FontStyle.italic,
+      fontSize: 22,
+      fontWeight: FontWeight.bold,
+      letterSpacing: 0.5,
+    ),
+  ),
+  actions: [
+    IconButton(
+      icon: const Icon(Icons.search),
+      onPressed: () {},
+    ),
+    Consumer(
+      builder: (context, ref, _) {
+        final count = ref.watch(cartCountProvider);
+        return Stack(
+          children: [
+            IconButton(
+              icon: const Icon(Icons.shopping_cart_outlined),
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const CartScreen()),
+              ),
+            ),
+            if (count > 0)
+              Positioned(
+                right: 6,
+                top: 6,
+                child: Container(
+                  padding: const EdgeInsets.all(4),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.error,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Text(
+                    '$count',
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 10,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+          ],
+        );
+      },
+    ),
+  ],
+),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
