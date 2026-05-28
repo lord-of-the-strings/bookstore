@@ -8,13 +8,11 @@ A virtual bookstore built with Flutter + Spring Boot.
 1. Install PostgreSQL and create a database called `bookstore_db`
 2. Copy `.env.example` to `.env` and fill in your values
 3. Place your Firebase service account JSON at `backend/config/firebase-service-account.json`
-4. Run:
-```bash
-cd backend
-export DB_PASSWORD=yourpassword
-export JWT_SECRET=your32characterstring
-./gradlew bootRun
-```
+4. Run backend/run.sh:
+   ```bash
+   cd backend
+   ./run.sh
+   ```
 
 ### Frontend
 1. Place your `google-services.json` at `frontend/android/app/google-services.json`
