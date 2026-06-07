@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:bookstore/screens/checkout_screen.dart';
 import '../providers/cart_provider.dart';
 
 class CartScreen extends ConsumerWidget {
@@ -234,9 +235,10 @@ class _CartTotal extends ConsumerWidget {
               width: double.infinity,
               height: 52,
               child: FilledButton.icon(
-                onPressed: () {
-                  // Checkout — coming next!
-                },
+                  onPressed: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const CheckoutScreen()),
+),
                 icon: const Icon(Icons.shopping_bag_outlined),
                 label: const Text(
                   'Proceed to Checkout',
